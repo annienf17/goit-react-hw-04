@@ -1,0 +1,29 @@
+form {
+  margin: 2rem 0;
+}
+.input {
+  width: 300px;
+  font-size: 1.6rem;
+  color: #fff;
+  border-radius: 8px;
+  border: none;
+  padding: 10px;
+}
+
+.button {
+  width: 200px;
+  font-size: 1.6rem;
+  background-color: rgb(39, 20, 247);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: 0.3s all;
+}
+
+.button:hover {
+  background-color: rgb(58, 122, 249);
+  color: #000;
+}

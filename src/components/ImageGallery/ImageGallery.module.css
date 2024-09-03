@@ -1,0 +1,23 @@
+/* ImageGallery.module.css */
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Odstęp między elementami */
+  justify-content: center;
+  max-width: calc(100vw - 48px);
+  list-style: none;
+}
+
+.gallery li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gallery img {
+  width: 500px;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
