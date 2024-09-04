@@ -19,7 +19,6 @@ function App() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
-  const [searchPerformed, setSearchPerformed] = useState(false);
 
   const fetchImages = async (searchQuery, pageNumber) => {
     setLoading(true);
@@ -60,7 +59,6 @@ function App() {
   const handleSearchSubmit = async (word) => {
     setQuery(word);
     setPage(1);
-    setSearchPerformed(true);
     setImages([]); // Resetuje stan images do pustej tablicy
     const fetchedImages = await fetchImages(word, 1);
     setImages(fetchedImages);
@@ -91,11 +89,7 @@ function App() {
           <ErrorMessage message={error} />
         ) : (
           <div>
-            <ImageGallery
-              images={images}
-              onImageClick={handleImageClick}
-              searchPerformed={searchPerformed}
-            />
+            <ImageGallery images={images} onImageClick={handleImageClick} />
             {images.length > 0 && !loading && (
               <LoadMoreBtn onClick={handleLoadMore} />
             )}
