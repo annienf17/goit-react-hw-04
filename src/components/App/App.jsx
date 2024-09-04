@@ -7,9 +7,9 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "../ImageModal/ImageModal";
 import { Toaster } from "react-hot-toast";
-import "./App.css";
+import css from "./App.module.css";
 
-const UNSPLASH_ACCESS_KEY = "k8EuQkjlDfP4iPJx0oYeVUvLtljhK7vsYim5eKYHuYE";
+const UNSPLASH_ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
 
 function App() {
   const [images, setImages] = useState([]);
@@ -19,6 +19,7 @@ function App() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
+  const [searchPerformed, setSearchPerformed] = useState(false);
 
   const fetchImages = async (searchQuery, pageNumber) => {
     setLoading(true);
@@ -35,13 +36,21 @@ function App() {
           },
         }
       );
-      return response.data.results.map((img) => ({
+
+      const results = response.data.results;
+
+      if (results.length === 0) {
+        setError("No images found for the given search query.");
+        return [];
+      }
+
+      return results.map((img) => ({
         id: img.id,
-        src: img.urls.regular, // Use the 'regular' URL for the image source
+        src: img.urls.regular,
         alt: img.alt_description,
       }));
     } catch (err) {
-      setError("Failed to fetch images. Please try again.");
+      setError(`Failed to fetch images: ${err.message}`);
       return [];
     } finally {
       setLoading(false);
@@ -51,6 +60,8 @@ function App() {
   const handleSearchSubmit = async (word) => {
     setQuery(word);
     setPage(1);
+    setSearchPerformed(true);
+    setImages([]); // Resetuje stan images do pustej tablicy
     const fetchedImages = await fetchImages(word, 1);
     setImages(fetchedImages);
   };
@@ -74,26 +85,32 @@ function App() {
 
   return (
     <>
-      <SearchBar onSubmit={handleSearchSubmit} />
-      {error ? (
-        <ErrorMessage message={error} />
-      ) : (
-        <>
-          <ImageGallery images={images} onImageClick={handleImageClick} />
-          {images.length > 0 && !loading && (
-            <LoadMoreBtn onClick={handleLoadMore} />
-          )}
-        </>
-      )}
-      {loading && <Loader />}
-      {isModalOpen && selectedImage && (
-        <ImageModal
-          isOpen={isModalOpen}
-          onRequestClose={closeModal}
-          image={selectedImage}
-        />
-      )}
-      <Toaster />
+      <div className={css.container}>
+        <SearchBar onSubmit={handleSearchSubmit} />
+        {error ? (
+          <ErrorMessage message={error} />
+        ) : (
+          <div>
+            <ImageGallery
+              images={images}
+              onImageClick={handleImageClick}
+              searchPerformed={searchPerformed}
+            />
+            {images.length > 0 && !loading && (
+              <LoadMoreBtn onClick={handleLoadMore} />
+            )}
+          </div>
+        )}
+        {loading && <Loader />}
+        {isModalOpen && selectedImage && (
+          <ImageModal
+            isOpen={isModalOpen}
+            onRequestClose={closeModal}
+            image={selectedImage}
+          />
+        )}
+        <Toaster />
+      </div>
     </>
   );
 }

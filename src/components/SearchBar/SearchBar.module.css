@@ -1,10 +1,12 @@
 form {
   margin: 2rem 0;
 }
+
 .input {
   width: 300px;
   font-size: 1.6rem;
-  color: #fff;
+  color: #000; /* Zmieniono kolor tekstu na czarny */
+  background-color: #fff; /* Dodano kolor tła */
   border-radius: 8px;
   border: none;
   padding: 10px;
@@ -17,7 +19,7 @@ form {
   color: white;
   border: none;
   border-radius: 8px;
-  padding: 10px;
+  padding: 11px;
   cursor: pointer;
   margin-left: 10px;
   transition: 0.3s all;

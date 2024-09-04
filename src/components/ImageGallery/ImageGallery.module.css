@@ -1,8 +1,7 @@
-/* ImageGallery.module.css */
 .gallery {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px; /* Odstęp między elementami */
+  gap: 10px;
   justify-content: center;
   max-width: calc(100vw - 48px);
   list-style: none;
