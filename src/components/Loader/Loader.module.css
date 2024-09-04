@@ -1,0 +1,6 @@
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Ustawia wysokość na 100% widocznej wysokości okna przeglądarki */
+}
